@@ -1,0 +1,41 @@
+name: Terraform on Azure
+
+on:
+  push:
+    branches:
+      - main   # सिर्फ main branch पर trigger होगा
+  workflow_dispatch:   # manual trigger option
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest   # या आपका self-hosted runner
+
+    steps:
+    # 1. Checkout repo
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # 2. Setup Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.6.6   # जो version चाहिए वो डाल सकते हैं
+
+    # 3. Azure Login
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # 4. Terraform Init
+    - name: Terraform Init
+      run: terraform init
+
+    # 5. Terraform Plan
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+
+    # 6. Terraform Apply (auto approve)
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'   # सिर्फ main branch पर apply होगा
+      run: terraform apply -auto-approve tfplan
