@@ -8,7 +8,7 @@ on:
 
 jobs:
   terraform:
-    runs-on: aarav   # या आपका self-hosted runner
+    runs-on: ubuntu-latest   # या आपका self-hosted runner
 
     steps:
     # 1. Checkout repo
