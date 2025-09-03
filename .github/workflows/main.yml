@@ -39,7 +39,19 @@ jobs:
     # 5. Terraform Plan
     - name: Terraform Plan
       run: terraform plan -out=tfplan
+    -  name: Manual Workflow Approval
+      # You may pin to the exact commit or the version.
+      # uses: trstringer/manual-approval@a824dad59ac64ac825ab8725599e483e24aa2815
+       uses: trstringer/manual-approval@v1.9.0
+        with:
+        # Required approvers
+         approvers: kushwaharahul025@gmail.com
+        # Secret
+        secret: ${{ secrets.AZURE_CREDENTIALS }}
+        # Minimum number of approvals to progress workflow
+        minimum-approvals: 1
 
+      
     # 6. Terraform Apply (auto approve)
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'   # सिर्फ main branch पर apply होगा
