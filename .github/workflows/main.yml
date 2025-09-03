@@ -8,7 +8,7 @@ on:
 
 jobs:
   terraform:
-    runs-on: [self-hosted, Linux, X64, aarav]
+    runs-on: runkro
    # या आपका self-hosted runner
 
     steps:
