@@ -8,13 +8,18 @@ on:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest   # या आपका self-hosted runner
+    runs-on: runkro
+   # या आपका self-hosted runner
 
     steps:
     # 1. Checkout repo
     - name: Checkout
       uses: actions/checkout@v3
-
+      
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y unzip
+            
+  
     # 2. Setup Terraform
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
